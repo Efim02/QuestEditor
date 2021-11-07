@@ -3,14 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuestEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Редактор квестов" Height="720" Width="1280">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="623*"/>
-            <ColumnDefinition Width="169*"/>
-        </Grid.ColumnDefinitions>
-
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0" Margin="0 0 0 2">
+                <MenuItem Header="Файл" Style="{StaticResource MenuButton}">
+                    <MenuItem Header="Открыть файл" Style="{StaticResource MenuButton}">
+                        <MenuItem Header="Партийный квест" Style="{StaticResource MenuButton}"
+                                  Command="{Binding OpenPartyQuestCommand}" CommandParameter="{Binding}" />
+                        <MenuItem Header="Событийный квест" Style="{StaticResource MenuButton}"
+                                  Command="{Binding OpenEventQuestCommand}" CommandParameter="{Binding}" />
+                        <MenuItem Header="Видео квест" Style="{StaticResource MenuButton}"
+                                  Command="{Binding OpenVideoQuestCommand}" CommandParameter="{Binding}" />
+                    </MenuItem>
+                    <MenuItem Header="Создать" Style="{StaticResource MenuButton}"
+                              Command="{Binding CreateFileCommand}" CommandParameter="{Binding}" />
+                    <MenuItem Header="Сохранить" Style="{StaticResource MenuButton}"
+                              Command="{Binding SaveFileCommand}" CommandParameter="{Binding}" />
+                    <MenuItem Header="Сохранить как" Style="{StaticResource MenuButton}"
+                              Command="{Binding SaveAsFileCommand}" CommandParameter="{Binding}" />
+                    <MenuItem Header="Выйти" Style="{StaticResource MenuButton}" Command="{Binding QuitCommand}" />
+                </MenuItem>
+            </Menu>
+            <Grid Grid.Row="1">
+                <ContentControl Content="{Binding RawQuestVm}" ContentTemplate="{DynamicResource QuestVmTemplate}" />
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
