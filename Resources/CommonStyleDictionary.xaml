@@ -52,4 +52,10 @@
         <Setter Property="BorderBrush" Value="DarkSlateGray" />
     </Style>
 
+    <Style x:Key="ButtonEditor" TargetType="Button">
+        <Setter Property="TextBlock.FontSize" Value="12" />
+        <Setter Property="TextBlock.FontWeight" Value="SemiBold" />
+        <Setter Property="TextBlock.Foreground" Value="#222222" />
+        <Setter Property="Margin" Value="1" />
+    </Style>
 </ResourceDictionary>

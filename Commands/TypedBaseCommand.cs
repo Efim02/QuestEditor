@@ -57,7 +57,7 @@ namespace QuestEditor.Commands
         /// <summary>
         ///     Выполнение команды с типизированным параметром.
         /// </summary>
-        /// <param name="parameter"> Параметр для команды. </param>
-        protected abstract void Execute(T parameter);
+        /// <param name="parent"> Параметр для команды. </param>
+        protected abstract void Execute(T parent);
     }
 }

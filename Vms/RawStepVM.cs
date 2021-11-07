@@ -11,6 +11,11 @@ namespace QuestEditor.Vms
     {
         private Dictionary<Languages, string> _languageToDescriptionDict;
 
+        /// <summary>
+        ///     Номер шага.
+        /// </summary>
+        private string _number;
+
         public string BackgroundSoundName { get; set; }
 
         public string Backwashes { get; set; }
@@ -26,7 +31,31 @@ namespace QuestEditor.Vms
 
         public string ImageName { get; set; }
 
+        public string EnglishDecision
+        {
+            get => LanguageToDecisionDict[Languages.English];
+            set => LanguageToDecisionDict[Languages.English] = value;
+        }
+
+        public string RussianDecision
+        {
+            get => LanguageToDecisionDict[Languages.Russian];
+            set => LanguageToDecisionDict[Languages.Russian] = value;
+        }
+
         public Dictionary<Languages, string> LanguageToDecisionDict { get; set; }
+
+        public string EnglishDescription
+        {
+            get => LanguageToDescriptionDict[Languages.English];
+            set => LanguageToDescriptionDict[Languages.English] = value;
+        }
+
+        public string RussianDescription
+        {
+            get => LanguageToDescriptionDict[Languages.Russian];
+            set => LanguageToDescriptionDict[Languages.Russian] = value;
+        }
 
         public Dictionary<Languages, string> LanguageToDescriptionDict
         {
@@ -36,7 +65,16 @@ namespace QuestEditor.Vms
 
         public string MusicName { get; set; }
 
-        public string Number { get; set; }
+        /// <inheritdoc cref="_number" />
+        public string Number
+        {
+            get => _number;
+            set
+            {
+                _number = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int RowNumber { get; set; }
 

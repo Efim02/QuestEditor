@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using QuestEditor.Constants;
 using QuestEditor.Vms;
 
 namespace QuestEditor.Utils
@@ -19,7 +20,7 @@ namespace QuestEditor.Utils
         {
             var depth = needSet.RawStepVM.Number;
             var tempParentNode = new NodeStepVM();
-            tempParentNode.Nodes = (ObservableCollection<NodeStepVM>)hierarchy;
+            tempParentNode.Nodes = (ObservableCollection<NodeStepVM>) hierarchy;
 
             RecurseSetNode(tempParentNode, needSet, depth);
         }
@@ -34,18 +35,18 @@ namespace QuestEditor.Utils
         {
             var currentNumber = GetCurrentNumber(depth);
 
-            AddNeededItems(currentNode.Nodes, currentNumber, currentNode.Parent);
+            AddNeededItems(currentNode, currentNumber);
             var currentNumberIndex = currentNumber - 1;
 
             if (CountNumbers(depth) < 2)
             {
                 if (currentNode.Nodes[currentNumberIndex] == null)
                 {
-                    currentNode.Nodes[currentNumberIndex] = new NodeStepVM(needSet.Parent, needSet.RawStepVM);
+                    currentNode.Nodes[currentNumberIndex] = new NodeStepVM(currentNode, needSet.RawStepVM);
                 }
                 else
                 {
-                    currentNode.Nodes[currentNumberIndex].Parent = needSet.Parent;
+                    currentNode.Nodes[currentNumberIndex].Parent = currentNode;
                     currentNode.Nodes[currentNumberIndex].RawStepVM = needSet.RawStepVM;
                 }
 
@@ -53,9 +54,7 @@ namespace QuestEditor.Utils
             }
 
             if (currentNode.Nodes[currentNumberIndex] == null)
-            {
-                currentNode.Nodes[currentNumberIndex] = new NodeStepVM(needSet.Parent, null);
-            }
+                currentNode.Nodes[currentNumberIndex] = new NodeStepVM(currentNode, null);
 
             RemoveCurrentNumber(ref depth);
 
@@ -112,13 +111,79 @@ namespace QuestEditor.Utils
             text = result;
         }
 
-        private static void AddNeededItems(IList<NodeStepVM> nodes, int count, RawQuestVM parent)
+        /// <summary>
+        ///     Добавляет не хватающих элементов в узел.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="count"></param>
+        private static void AddNeededItems(NodeStepVM parent, int count)
         {
+            if (count > MaxMinValues.MAX_ITEM_ADDED)
+                throw new Exception("Требуется добавить в иерархию слишком большое количество элементов.\n" +
+                                    $"Node?Number: {parent.RawStepVM?.Number}; Количество: {count}.");
+
+            var nodes = parent.Nodes;
+
             for (var index = nodes.Count; index < count; index++)
             {
                 var item = new NodeStepVM();
                 item.Parent = parent;
                 nodes.Add(item);
+            }
+        }
+
+        /// <summary>
+        ///     Установить number для нового узла.
+        /// </summary>
+        /// <param name="parent">Родитель.</param>
+        /// <param name="node">Нод.</param>
+        public static void SetNumberForNewNode(NodeStepVM parent, NodeStepVM node)
+        {
+            node.RawStepVM.Number = $"{parent.RawStepVM.Number}.{parent.Nodes.Count + 1}";
+        }
+
+        /// <summary>
+        ///     Пересчитывает number для узлов родителя.
+        /// </summary>
+        /// <param name="parent">Родитель.</param>
+        public static void UpdateNumbersInNode(NodeStepVM parent)
+        {
+            var index = 1;
+            foreach (var node in parent.Nodes)
+            {
+                if (parent.RawStepVM.Number.Length > 0)
+                    node.RawStepVM.Number = $"{parent.RawStepVM.Number}.";
+
+                node.RawStepVM.Number = $"{index}";
+                index++;
+            }
+        }
+
+        /// <summary>
+        ///     Устанавливает все шаги из узлов, в Steps.
+        /// </summary>
+        /// <param name="rawQuestVm"></param>
+        public static void AddAllNodesInSteps(RawQuestVM rawQuestVm)
+        {
+            var steps = rawQuestVm.Steps;
+            steps.Clear();
+
+            var hierarchy = rawQuestVm.Hierarchy;
+
+            RecurseAllNodesInSteps(steps, hierarchy);
+        }
+
+        /// <summary>
+        ///     Рекурсивная функция добавления всех шагов.
+        /// </summary>
+        /// <param name="steps">Общий список шагов.</param>
+        /// <param name="nodes">Иерархия.</param>
+        private static void RecurseAllNodesInSteps(IList<RawStepVM> steps, IList<NodeStepVM> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                steps.Add(node.RawStepVM);
+                RecurseAllNodesInSteps(steps, node.Nodes);
             }
         }
     }

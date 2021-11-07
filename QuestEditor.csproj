@@ -84,7 +84,12 @@
     <Compile Include="Commands\MenuCommands\QuitCommand.cs" />
     <Compile Include="Commands\MenuCommands\SaveAsFileCommand.cs" />
     <Compile Include="Commands\MenuCommands\SaveFileCommand.cs" />
+    <Compile Include="Commands\NodeCommands\NodeParentAddCommand.cs" />
+    <Compile Include="Commands\NodeCommands\NodeAddCommand.cs" />
+    <Compile Include="Commands\NodeCommands\NodeRemoveCommand.cs" />
     <Compile Include="Commands\TypedBaseCommand.cs" />
+    <Compile Include="Constants\MaxMinValues.cs" />
+    <Compile Include="Constants\Names.cs" />
     <Compile Include="Utils\AppUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\HierarchyVmUtils.cs" />

@@ -12,14 +12,19 @@ namespace QuestEditor.Vms
             Nodes = new ObservableCollection<NodeStepVM>();
         }
 
-        public NodeStepVM(RawQuestVM rawQuestVm, RawStepVM rawStepVm)
+        /// <summary>
+        ///     Создать узел, указав родителя.
+        /// </summary>
+        /// <param name="parent">Родительский узел.</param>
+        /// <param name="rawStepVm">Данные.</param>
+        public NodeStepVM(NodeStepVM parent, RawStepVM rawStepVm)
         {
             Nodes = new ObservableCollection<NodeStepVM>();
-            Parent = rawQuestVm;
+            Parent = parent;
             RawStepVM = rawStepVm;
         }
 
-        public RawQuestVM Parent { get; set; }
+        public NodeStepVM Parent { get; set; }
 
         public RawStepVM RawStepVM { get; set; }
 

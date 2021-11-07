@@ -24,9 +24,13 @@ namespace QuestEditor.Xlsx
             _stream = stream;
             _workbook = new XLWorkbook(_stream);
             _russianWorksheet = _workbook.Worksheets.Worksheet(1);
+            _russianWorksheet.DataType = XLDataType.Text;
 
             if (_workbook.Worksheets.Count > 1)
+            {
                 _englishWorksheet = _workbook.Worksheets.Worksheet(2);
+                _englishWorksheet.DataType = XLDataType.Text;
+            }
         }
 
         /// <summary>
@@ -55,6 +59,8 @@ namespace QuestEditor.Xlsx
         /// <param name="stream">Поток для записи.</param>
         public void Save(Stream stream)
         {
+            _russianWorksheet.DataType = XLDataType.Text;
+            _englishWorksheet.DataType = XLDataType.Text;
             _workbook.SaveAs(stream);
         }
 
@@ -86,10 +92,17 @@ namespace QuestEditor.Xlsx
         /// <param name="dictionary"></param>
         public void SetCellDict(int row, int column, Dictionary<Languages, string> dictionary)
         {
-            _russianWorksheet.Cell(row, column).Value = dictionary[Languages.Russian];
+            if (dictionary.TryGetValue(Languages.Russian, out var rusData))
+            {
+                _russianWorksheet.Cell(row, column).DataType = XLDataType.Text;
+                _russianWorksheet.Cell(row, column).Value = rusData;
+            }
 
-            if (_englishWorksheet != null)
-                _englishWorksheet.Cell(row, column).Value = dictionary[Languages.English];
+            if (_englishWorksheet != null && dictionary.TryGetValue(Languages.English, out var engData))
+            {
+                _englishWorksheet.Cell(row, column).DataType = XLDataType.Text;
+                _englishWorksheet.Cell(row, column).Value = engData;
+            }
         }
 
         /// <summary>
@@ -122,8 +135,8 @@ namespace QuestEditor.Xlsx
         {
             RawQuest.SetRawPartyQuest(this, rawQuest);
 
-            if (string.IsNullOrWhiteSpace(rawQuest.StartImageName))
-                throw new StepParseException("Не задана начальная картинка", 2, rawQuest.NameDict[0]);
+            //if (string.IsNullOrWhiteSpace(rawQuest.StartImageName))
+            //    throw new StepParseException("Не задана начальная картинка", 2, rawQuest.NameDict[0]);
 
             var stepRowIndex = 4;
             for (var i = 0; i < rawQuest.Steps.Count; ++i)
@@ -226,8 +239,8 @@ namespace QuestEditor.Xlsx
             if (value is null)
                 return;
 
-            _russianWorksheet.Cell(row, column).Value = value.ToString();
-            _englishWorksheet.Cell(row, column).Value = value.ToString();
+            _russianWorksheet.Cell(row, column).SetValue(value.ToString());
+            _englishWorksheet.Cell(row, column).SetValue(value.ToString());
         }
     }
 }

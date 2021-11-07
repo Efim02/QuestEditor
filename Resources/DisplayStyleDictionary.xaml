@@ -8,49 +8,137 @@
 
     <DataTemplate x:Key="QuestVmTemplate" DataType="{x:Type vms:RawQuestVM}">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.125*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TreeView Grid.Column="0" Margin="5 0" ItemsSource="{Binding Hierarchy}" x:Name="treeView"
-                      Style="{DynamicResource TreeViewCommon}"
-                      ItemTemplate="{DynamicResource NodeStepVmHierarchicalTemplate}"
-                      ItemContainerStyle="{DynamicResource TreeViewItemCommon}"
-                      SelectedValuePath="{Binding SelectedRawStepVm}" />
-            <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3" Background="DimGray"
-                          HorizontalAlignment="Stretch" />
-            <ContentControl Grid.Column="2" Content="{Binding ElementName = treeView, Path=SelectedValue.RawStepVM}"
-                            ContentTemplate="{DynamicResource RawStepVmTemplate}" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Тип квеста:" Margin="10 2" FontSize="18"
+                           HorizontalAlignment="Center" />
+                <TextBlock Style="{DynamicResource NameProperty}" Text="{Binding TypeQuest}" Margin="10 2"
+                           FontSize="18" Foreground="DimGray"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.125*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Content="Добавить" Style="{DynamicResource ButtonEditor}"
+                            Command="{Binding NodeAddCommand}"
+                            CommandParameter="{Binding ElementName = treeView, Path=SelectedValue}" />
+                    <Button Grid.Row="0" Grid.Column="1" Content="Удалить" Style="{DynamicResource ButtonEditor}"
+                            Command="{Binding NodeRemoveCommand}"
+                            CommandParameter="{Binding ElementName = treeView, Path=SelectedValue}" />
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+                        <Button Content="Новый род. узел" Style="{DynamicResource ButtonEditor}"
+                                Command="{Binding NodeParentAddCommand}"
+                                CommandParameter="{Binding MainNode}" />
+                        <TreeView
+                            Margin="5 0" ItemsSource="{Binding Hierarchy}" x:Name="treeView"
+                            Style="{DynamicResource TreeViewCommon}"
+                            ItemTemplate="{DynamicResource NodeStepVmHierarchicalTemplate}"
+                            ItemContainerStyle="{DynamicResource TreeViewItemCommon}"
+                            SelectedValuePath="{Binding SelectedRawStepVm}" />
+                    </StackPanel>
+                </Grid>
+                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3" Background="DimGray"
+                              HorizontalAlignment="Stretch" />
+                <ContentControl Grid.Column="2"
+                                Content="{Binding ElementName = treeView, Path=SelectedValue.RawStepVM}"
+                                ContentTemplate="{DynamicResource RawStepVmTemplate}" />
+            </Grid>
         </Grid>
     </DataTemplate>
 
     <HierarchicalDataTemplate x:Key="NodeStepVmHierarchicalTemplate"
                               DataType="{x:Type vms:NodeStepVM}"
                               ItemsSource="{Binding Nodes}">
-        <Grid>
-            <Border Height="20" Background="FloralWhite" CornerRadius="2" BorderThickness="1"
-                    BorderBrush="Gray" x:Name="Bg">
-                <TextBlock Text="{Binding RawStepVM.Number}" TextAlignment="Left" />
-            </Border>
-        </Grid>
+        <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource NodeStepVmTemplate}" />
     </HierarchicalDataTemplate>
 
+    <DataTemplate x:Key="NodeStepVmTemplate" DataType="{x:Type vms:NodeStepVM}">
+        <Border x:Name="Border" Height="20" Background="Bisque" CornerRadius="2"
+                BorderThickness="1"
+                BorderBrush="Gray">
+            <TextBlock Text="{Binding RawStepVM.Number}" TextAlignment="Left" />
+        </Border>
+        <DataTemplate.Triggers>
+            <EventTrigger RoutedEvent="Mouse.MouseDown">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="0:0:0" Value="White" />
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="0:0:1" Value="Bisque" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
     <DataTemplate x:Key="RawStepVmTemplate" DataType="{x:Type vms:RawStepVM}">
-        <StackPanel>
-            <!--1-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="LanguageToDecisionDict" />
-            <TextBox Text="{Binding LanguageToDecisionDict}" Style="{DynamicResource TextBoxProperty}" />
-            <!--3-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Challenges" />
-            <TextBox Text="{Binding Challenges}" Style="{DynamicResource TextBoxProperty}" />
+<ScrollViewer>
+        <StackPanel CanVerticallyScroll="True" CanHorizontallyScroll="False">
+            <!--Number-->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Номер шага:" Margin="10 2" />
+                <TextBlock Style="{DynamicResource NameProperty}" Text="{Binding Number}" Foreground="DimGray" />
+            </StackPanel>
+            <!--2 E-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (English)" />
+            <TextBox Text="{Binding EnglishDecision}" Style="{DynamicResource TextBoxProperty}" />
+            <!--2 R-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (Russian)" />
+            <TextBox Text="{Binding RussianDecision}" Style="{DynamicResource TextBoxProperty}" />
+            <!--3 E-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (English)" />
+            <TextBox Text="{Binding EnglishDescription}" Style="{DynamicResource TextBoxProperty}" />
+            <!--3 R-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (Russian)" />
+            <TextBox Text="{Binding RussianDescription}" Style="{DynamicResource TextBoxProperty}" />
             <!--4-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Backwashes" />
-            <TextBox Text="{Binding Backwashes}" Style="{DynamicResource TextBoxProperty}" />
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Вызовы" />
+            <TextBox Text="{Binding Challenges}" Style="{DynamicResource TextBoxProperty}" />
             <!--5-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Gossips" />
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Последствия" />
+            <TextBox Text="{Binding Backwashes}" Style="{DynamicResource TextBoxProperty}" />
+            <!--6-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Разблокируемый слух" />
             <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
+            <!--7-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Название картинки" />
+            <TextBox Text="{Binding ImageName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--8-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Название музыки" />
+            <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
+            <!--9-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="BackgroundSoundName" />
+            <TextBox Text="{Binding BackgroundSoundName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--10-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="SingleSoundName" />
+            <TextBox Text="{Binding SingleSoundName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--11-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Duration" />
+            <TextBox Text="{Binding Duration}" Style="{DynamicResource TextBoxProperty}" />
         </StackPanel>
+</ScrollViewer>
     </DataTemplate>
 
 </ResourceDictionary>

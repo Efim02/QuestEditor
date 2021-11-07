@@ -20,7 +20,7 @@ namespace QuestEditor.Utils
             {
                 DefaultExt = "*",
                 Filter = FILTER_EXTENSION_FILES,
-                FileName = rawQuestVm.FilePath
+                FileName = Path.GetFileName(rawQuestVm.FilePath)
             };
             dialog.ShowDialog();
 
@@ -38,6 +38,8 @@ namespace QuestEditor.Utils
         /// <param name="rawQuestVm"></param>
         public static void SaveFile(RawQuestVM rawQuestVm)
         {
+            HierarchyVmUtils.AddAllNodesInSteps(rawQuestVm);
+
             var rawQuest = Injector.Get<IMapper>().Map<RawQuest>(rawQuestVm);
 
             using (var stream = File.Create(rawQuestVm.FilePath))

@@ -4,7 +4,7 @@
     {
         Russian = 0,
 
-        English = 1,
+        English = 1
         //Chinese = 2,
         //Spanish = 3,
         //German = 4,
