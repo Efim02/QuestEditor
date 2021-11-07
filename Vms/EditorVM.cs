@@ -10,6 +10,11 @@ namespace QuestEditor.Vms
     {
         private RawQuestVM _rawQuestVm;
 
+        /// <summary>
+        ///     Открыты настройки квеста.
+        /// </summary>
+        private bool _settingsQuestIsOpen;
+
         public EditorVM()
         {
             OpenPartyQuestCommand = new OpenFileCommand();
@@ -25,6 +30,7 @@ namespace QuestEditor.Vms
             SaveAsFileCommand = new SaveAsFileCommand();
             SaveFileCommand = new SaveFileCommand();
             CreateFileCommand = new CreateFileCommand();
+            SettingsQuestCommand = new SettingsQuestCommand();
         }
 
         /// <summary>
@@ -36,12 +42,28 @@ namespace QuestEditor.Vms
             set
             {
                 _rawQuestVm = value;
+                _rawQuestVm.ParentEditorVm = this;
                 OnPropertyChanged();
-
+                OnPropertyChanged(nameof(HasOpenQuest));
+                
                 _rawQuestVm.UpdateHierarchy();
             }
         }
 
+        /// <inheritdoc cref="_settingsQuestIsOpen" />
+        public bool SettingsQuestIsOpen
+        {
+            get => _settingsQuestIsOpen;
+            set
+            {
+                _settingsQuestIsOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HasOpenQuest => RawQuestVm is null;
+
+        public SettingsQuestCommand SettingsQuestCommand { get; }
         public OpenFileCommand OpenPartyQuestCommand { get; }
         public OpenFileCommand OpenEventQuestCommand { get; }
         public OpenFileCommand OpenVideoQuestCommand { get; }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using QuestEditor.Commands.MenuCommands;
 using QuestEditor.Commands.NodeCommands;
 using QuestEditor.Constants;
 using QuestEditor.Utils;
@@ -17,6 +18,7 @@ namespace QuestEditor.Vms
         /// </summary>
         private RawStepVM _selectedRawStepVm;
 
+        public EditorVM ParentEditorVm { get; set; }
 
         public RawQuestVM()
         {
@@ -31,7 +33,23 @@ namespace QuestEditor.Vms
             NodeAddCommand = new NodeAddCommand();
             NodeRemoveCommand = new NodeRemoveCommand();
             NodeParentAddCommand = new NodeParentAddCommand();
+
+            BriefDict = new Dictionary<Languages, string>
+            {
+                {Languages.English, ""}, {Languages.Russian, ""}
+            };
+            InitialDescriptionDict = new Dictionary<Languages, string>
+            {
+                {Languages.English, ""}, {Languages.Russian, ""}
+            };
+            NameDict = new Dictionary<Languages, string>
+            {
+                {Languages.English, ""}, {Languages.Russian, ""}
+            };
+            SettingsQuestCommand = new SettingsQuestCommand();
         }
+
+        public SettingsQuestCommand SettingsQuestCommand { get; }
 
         public string FilePath { get; set; }
 
@@ -41,9 +59,33 @@ namespace QuestEditor.Vms
 
         public string BackgroundSoundName { get; set; }
 
+        public string EnglishBrief
+        {
+            get => BriefDict[Languages.English];
+            set => BriefDict[Languages.English] = value;
+        }
+
+        public string RussianBrief
+        {
+            get => BriefDict[Languages.Russian];
+            set => BriefDict[Languages.Russian] = value;
+        }
+
         public Dictionary<Languages, string> BriefDict { get; set; }
 
         public string Condition { get; set; }
+
+        public string EnglishInitialDescription
+        {
+            get => InitialDescriptionDict[Languages.English];
+            set => InitialDescriptionDict[Languages.English] = value;
+        }
+
+        public string RussianInitialDescription
+        {
+            get => InitialDescriptionDict[Languages.Russian];
+            set => InitialDescriptionDict[Languages.Russian] = value;
+        }
 
         public Dictionary<Languages, string> InitialDescriptionDict { get; set; }
 
@@ -54,6 +96,18 @@ namespace QuestEditor.Vms
         public string Location { get; set; }
 
         public string MusicName { get; set; }
+
+        public string EnglishName
+        {
+            get => NameDict[Languages.English];
+            set => NameDict[Languages.English] = value;
+        }
+
+        public string RussianName
+        {
+            get => NameDict[Languages.Russian];
+            set => NameDict[Languages.Russian] = value;
+        }
 
         public Dictionary<Languages, string> NameDict { get; set; }
 

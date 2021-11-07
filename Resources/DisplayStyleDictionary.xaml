@@ -94,51 +94,112 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RawStepVmTemplate" DataType="{x:Type vms:RawStepVM}">
-<ScrollViewer>
-        <StackPanel CanVerticallyScroll="True" CanHorizontallyScroll="False">
-            <!--Number-->
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{DynamicResource NameProperty}" Text="Номер шага:" Margin="10 2" />
-                <TextBlock Style="{DynamicResource NameProperty}" Text="{Binding Number}" Foreground="DimGray" />
+        <ScrollViewer>
+            <StackPanel CanVerticallyScroll="True" CanHorizontallyScroll="False">
+                <!--Number-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{DynamicResource NameProperty}" Text="Номер шага:" Margin="10 2" />
+                    <TextBlock Style="{DynamicResource NameProperty}" Text="{Binding Number}" Foreground="DimGray" />
+                </StackPanel>
+                <!--2 E-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (English)" />
+                <TextBox Text="{Binding EnglishDecision}" Style="{DynamicResource TextBoxProperty}" />
+                <!--2 R-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (Russian)" />
+                <TextBox Text="{Binding RussianDecision}" Style="{DynamicResource TextBoxProperty}" />
+                <!--3 E-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (English)" />
+                <TextBox Text="{Binding EnglishDescription}" Style="{DynamicResource TextBoxProperty}" />
+                <!--3 R-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (Russian)" />
+                <TextBox Text="{Binding RussianDescription}" Style="{DynamicResource TextBoxProperty}" />
+                <!--4-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Вызовы" />
+                <TextBox Text="{Binding Challenges}" Style="{DynamicResource TextBoxProperty}" />
+                <!--5-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Последствия" />
+                <TextBox Text="{Binding Backwashes}" Style="{DynamicResource TextBoxProperty}" />
+                <!--6-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Разблокируемый слух" />
+                <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
+                <!--7-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Название картинки" />
+                <TextBox Text="{Binding ImageName}" Style="{DynamicResource TextBoxProperty}" />
+                <!--8-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Название музыки" />
+                <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
+                <!--9-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="BackgroundSoundName" />
+                <TextBox Text="{Binding BackgroundSoundName}" Style="{DynamicResource TextBoxProperty}" />
+                <!--10-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="SingleSoundName" />
+                <TextBox Text="{Binding SingleSoundName}" Style="{DynamicResource TextBoxProperty}" />
+                <!--11-->
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Duration" />
+                <TextBox Text="{Binding Duration}" Style="{DynamicResource TextBoxProperty}" />
             </StackPanel>
-            <!--2 E-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (English)" />
-            <TextBox Text="{Binding EnglishDecision}" Style="{DynamicResource TextBoxProperty}" />
-            <!--2 R-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Действие (Russian)" />
-            <TextBox Text="{Binding RussianDecision}" Style="{DynamicResource TextBoxProperty}" />
-            <!--3 E-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (English)" />
-            <TextBox Text="{Binding EnglishDescription}" Style="{DynamicResource TextBoxProperty}" />
-            <!--3 R-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (Russian)" />
-            <TextBox Text="{Binding RussianDescription}" Style="{DynamicResource TextBoxProperty}" />
-            <!--4-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Вызовы" />
-            <TextBox Text="{Binding Challenges}" Style="{DynamicResource TextBoxProperty}" />
-            <!--5-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Последствия" />
-            <TextBox Text="{Binding Backwashes}" Style="{DynamicResource TextBoxProperty}" />
-            <!--6-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Разблокируемый слух" />
-            <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
-            <!--7-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Название картинки" />
-            <TextBox Text="{Binding ImageName}" Style="{DynamicResource TextBoxProperty}" />
-            <!--8-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Название музыки" />
-            <TextBox Text="{Binding Gossips}" Style="{DynamicResource TextBoxProperty}" />
-            <!--9-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="BackgroundSoundName" />
-            <TextBox Text="{Binding BackgroundSoundName}" Style="{DynamicResource TextBoxProperty}" />
-            <!--10-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="SingleSoundName" />
-            <TextBox Text="{Binding SingleSoundName}" Style="{DynamicResource TextBoxProperty}" />
-            <!--11-->
-            <TextBlock Style="{DynamicResource NameProperty}" Text="Duration" />
-            <TextBox Text="{Binding Duration}" Style="{DynamicResource TextBoxProperty}" />
-        </StackPanel>
-</ScrollViewer>
+        </ScrollViewer>
     </DataTemplate>
 
+    <DataTemplate x:Key="QuestSettingsTemplate" DataType="{x:Type vms:RawQuestVM}">
+        <StackPanel Background="White">
+            <!--1-->
+            <Grid>
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Номер" />
+                <Button Style="{DynamicResource ButtonEditor}" Content="Закрыть" FontSize="16"
+                        HorizontalAlignment="Right" Command="{Binding SettingsQuestCommand}" 
+                        CommandParameter="{Binding ParentEditorVm}"/>
+            </Grid>
+            <TextBox Text="{Binding NumberOfParticipants}" Style="{DynamicResource TextBoxProperty}" />
+            <!--2 R-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Название (Russian)" />
+            <TextBox Text="{Binding RussianName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--2 E-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Название (English)" />
+            <TextBox Text="{Binding EnglishName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--3 R-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (Russian)" />
+            <TextBox Text="{Binding RussianBrief}" Style="{DynamicResource TextBoxProperty}" />
+            <!--3 E-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Описание (English)" />
+            <TextBox Text="{Binding EnglishBrief}" Style="{DynamicResource TextBoxProperty}" />
+            <!--4-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Локация" />
+            <TextBox Text="{Binding Location}" Style="{DynamicResource TextBoxProperty}" />
+            <!--5 R-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Первоначальное Описание (Russian)" />
+            <TextBox Text="{Binding RussianInitialDescription}" Style="{DynamicResource TextBoxProperty}" />
+            <!--5 E-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Первоначальное Описание (English)" />
+            <TextBox Text="{Binding EnglishInitialDescription}" Style="{DynamicResource TextBoxProperty}" />
+            <!--6-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Задержка появления" />
+            <TextBox Text="{Binding ApperDelayInHours}" Style="{DynamicResource TextBoxProperty}" />
+            <!--7-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Условие появления" />
+            <TextBox Text="{Binding Condition}" Style="{DynamicResource TextBoxProperty}" />
+            <!--8-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Начальная картинка" />
+            <TextBox Text="{Binding StartImageName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--9-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="Начальная музыка" />
+            <TextBox Text="{Binding MusicName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--10-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="BackgroundSoundName" />
+            <TextBox Text="{Binding BackgroundSoundName}" Style="{DynamicResource TextBoxProperty}" />
+            <!--11-->
+            <TextBlock Style="{DynamicResource NameProperty}" Text="SingleSoundName" />
+            <TextBox Text="{Binding SingleSoundName}" Style="{DynamicResource TextBoxProperty}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ShowPreview">
+        <Grid Background="White">
+            <Border  HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="3" Padding="20" 
+                     BorderThickness="5" BorderBrush="Gray">
+                <TextBlock Style="{DynamicResource NameProperty}" Text="Выберите или создайте КВЕСТ." FontSize="24"
+                           FontWeight="Bold"/>
+            </Border>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

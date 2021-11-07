@@ -1,5 +1,6 @@
 ﻿using System;
 using QuestEditor.Vms;
+using Application = System.Windows.Application;
 
 namespace QuestEditor.Commands.MenuCommands
 {
@@ -7,7 +8,7 @@ namespace QuestEditor.Commands.MenuCommands
     {
         protected override void Execute(EditorVM editorVM)
         {
-            throw new NotImplementedException();
+           Application.Current.MainWindow.Close();
         }
     }
 }

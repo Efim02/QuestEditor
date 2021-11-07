@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Редактор квестов" Height="720" Width="1280">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -27,12 +30,21 @@
                               Command="{Binding SaveFileCommand}" CommandParameter="{Binding}" />
                     <MenuItem Header="Сохранить как" Style="{StaticResource MenuButton}"
                               Command="{Binding SaveAsFileCommand}" CommandParameter="{Binding}" />
-                    <MenuItem Header="Выйти" Style="{StaticResource MenuButton}" Command="{Binding QuitCommand}" />
+                    <MenuItem Header="Свойства квеста" Style="{StaticResource MenuButton}"
+                              Command="{Binding SettingsQuestCommand}" CommandParameter="{Binding}" />
+                    <MenuItem Header="Выйти" Style="{StaticResource MenuButton}" Command="{Binding QuitCommand}" CommandParameter="{Binding}"/>
                 </MenuItem>
             </Menu>
             <Grid Grid.Row="1">
                 <ContentControl Content="{Binding RawQuestVm}" ContentTemplate="{DynamicResource QuestVmTemplate}" />
             </Grid>
+            <ContentControl Grid.Row="1"
+                            Visibility="{Binding SettingsQuestIsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Content="{Binding RawQuestVm}"
+                            ContentTemplate="{DynamicResource QuestSettingsTemplate}" />
+            <ContentControl  Grid.Row="1"
+                             Visibility="{Binding HasOpenQuest, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             ContentTemplate="{DynamicResource ShowPreview}"/>
         </Grid>
     </Grid>
 </Window>
