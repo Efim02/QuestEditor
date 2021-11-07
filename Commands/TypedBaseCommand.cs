@@ -12,7 +12,7 @@ namespace QuestEditor.Commands
         /// <summary>
         ///     Название окна ошибки.
         /// </summary>
-        private const string ERROR_WINDOW_TITLE = "Ошибка команды";
+        private const string ErrorWindowTitle = "Ошибка команды";
 
         /// <summary>
         ///     Указывает, доступна ли возможность вызова команды.
@@ -40,7 +40,7 @@ namespace QuestEditor.Commands
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ERROR_WINDOW_TITLE}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
+                MessageBox.Show($"{ErrorWindowTitle}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
             }
         }
 

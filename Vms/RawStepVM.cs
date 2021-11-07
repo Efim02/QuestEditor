@@ -16,6 +16,18 @@ namespace QuestEditor.Vms
         /// </summary>
         private string _number;
 
+        public RawStepVM()
+        {
+            LanguageToDecisionDict = new Dictionary<Languages, string>
+            {
+                {Languages.English, ""}, {Languages.Russian, ""}
+            };
+            LanguageToDescriptionDict = new Dictionary<Languages, string>
+            {
+                {Languages.English, ""}, {Languages.Russian, ""}
+            };
+        }
+
         public string BackgroundSoundName { get; set; }
 
         public string Backwashes { get; set; }
@@ -79,17 +91,5 @@ namespace QuestEditor.Vms
         public int RowNumber { get; set; }
 
         public string SingleSoundName { get; set; }
-
-        public RawStepVM()
-        {
-            LanguageToDecisionDict = new Dictionary<Languages, string>
-            {
-                {Languages.English, ""}, {Languages.Russian, ""}
-            };
-            LanguageToDescriptionDict = new Dictionary<Languages, string>
-            {
-                {Languages.English, ""}, {Languages.Russian, ""}
-            };
-        }
     }
 }

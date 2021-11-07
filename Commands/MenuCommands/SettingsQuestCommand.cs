@@ -7,9 +7,9 @@ namespace QuestEditor.Commands.MenuCommands
     /// </summary>
     public class SettingsQuestCommand : TypedBaseCommand<EditorVM>
     {
-        protected override void Execute(EditorVM editorVM)
+        protected override void Execute(EditorVM editorVm)
         {
-            editorVM.SettingsQuestIsOpen = !editorVM.SettingsQuestIsOpen;
+            editorVm.SettingsQuestIsOpen = !editorVm.SettingsQuestIsOpen;
         }
     }
 }

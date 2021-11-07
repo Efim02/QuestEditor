@@ -4,9 +4,9 @@ namespace QuestEditor.Commands.MenuCommands
 {
     public class CreateFileCommand : TypedBaseCommand<EditorVM>
     {
-        protected override void Execute(EditorVM editorVM)
+        protected override void Execute(EditorVM editorVm)
         {
-            editorVM.RawQuestVm = new RawQuestVM();
+            editorVm.RawQuestVm = new RawQuestVM();
         }
     }
 }

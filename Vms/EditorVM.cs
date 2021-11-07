@@ -45,7 +45,7 @@ namespace QuestEditor.Vms
                 _rawQuestVm.ParentEditorVm = this;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(HasOpenQuest));
-                
+
                 _rawQuestVm.UpdateHierarchy();
             }
         }

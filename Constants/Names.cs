@@ -5,6 +5,6 @@
     /// </summary>
     public static class Names
     {
-        public const string MAIN_NODE = "Главный узел";
+        public const string MainNode = "Главный узел";
     }
 }

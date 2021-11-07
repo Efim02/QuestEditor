@@ -118,7 +118,7 @@ namespace QuestEditor.Utils
         /// <param name="count"></param>
         private static void AddNeededItems(NodeStepVM parent, int count)
         {
-            if (count > MaxMinValues.MAX_ITEM_ADDED)
+            if (count > MaxMinValues.MaxItemAdded)
                 throw new Exception("Требуется добавить в иерархию слишком большое количество элементов.\n" +
                                     $"Node?Number: {parent.RawStepVM?.Number}; Количество: {count}.");
 

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using System.Windows;
 using QuestEditor.Vms;
-using Application = System.Windows.Application;
 
 namespace QuestEditor.Commands.MenuCommands
 {
     public class QuitCommand : TypedBaseCommand<EditorVM>
     {
-        protected override void Execute(EditorVM editorVM)
+        protected override void Execute(EditorVM editorVm)
         {
-           Application.Current.MainWindow.Close();
+            Application.Current.MainWindow?.Close();
         }
     }
 }

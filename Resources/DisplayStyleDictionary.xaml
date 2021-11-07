@@ -147,8 +147,8 @@
             <Grid>
                 <TextBlock Style="{DynamicResource NameProperty}" Text="Номер" />
                 <Button Style="{DynamicResource ButtonEditor}" Content="Закрыть" FontSize="16"
-                        HorizontalAlignment="Right" Command="{Binding SettingsQuestCommand}" 
-                        CommandParameter="{Binding ParentEditorVm}"/>
+                        HorizontalAlignment="Right" Command="{Binding SettingsQuestCommand}"
+                        CommandParameter="{Binding ParentEditorVm}" />
             </Grid>
             <TextBox Text="{Binding NumberOfParticipants}" Style="{DynamicResource TextBoxProperty}" />
             <!--2 R-->
@@ -195,10 +195,10 @@
 
     <DataTemplate x:Key="ShowPreview">
         <Grid Background="White">
-            <Border  HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="3" Padding="20" 
-                     BorderThickness="5" BorderBrush="Gray">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="3" Padding="20"
+                    BorderThickness="5" BorderBrush="Gray">
                 <TextBlock Style="{DynamicResource NameProperty}" Text="Выберите или создайте КВЕСТ." FontSize="24"
-                           FontWeight="Bold"/>
+                           FontWeight="Bold" />
             </Border>
         </Grid>
     </DataTemplate>

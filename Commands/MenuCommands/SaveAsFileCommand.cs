@@ -5,12 +5,12 @@ namespace QuestEditor.Commands.MenuCommands
 {
     public class SaveAsFileCommand : TypedBaseCommand<EditorVM>
     {
-        protected override void Execute(EditorVM editorVM)
+        protected override void Execute(EditorVM editorVm)
         {
-            if (editorVM.RawQuestVm == null)
+            if (editorVm.RawQuestVm == null)
                 return;
 
-            FileUtils.SelectPathSaving(editorVM.RawQuestVm);
+            FileUtils.SelectPathSaving(editorVm.RawQuestVm);
         }
     }
 }

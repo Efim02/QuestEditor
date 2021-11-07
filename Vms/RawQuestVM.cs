@@ -18,8 +18,6 @@ namespace QuestEditor.Vms
         /// </summary>
         private RawStepVM _selectedRawStepVm;
 
-        public EditorVM ParentEditorVm { get; set; }
-
         public RawQuestVM()
         {
             TypeQuest = TypeQuest.PartyQuest;
@@ -28,7 +26,7 @@ namespace QuestEditor.Vms
             MainNode = new NodeStepVM
             {
                 Nodes = Hierarchy,
-                RawStepVM = new RawStepVM {Number = Names.MAIN_NODE}
+                RawStepVM = new RawStepVM {Number = Names.MainNode}
             };
             NodeAddCommand = new NodeAddCommand();
             NodeRemoveCommand = new NodeRemoveCommand();
@@ -48,6 +46,8 @@ namespace QuestEditor.Vms
             };
             SettingsQuestCommand = new SettingsQuestCommand();
         }
+
+        public EditorVM ParentEditorVm { get; set; }
 
         public SettingsQuestCommand SettingsQuestCommand { get; }
 
